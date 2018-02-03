@@ -12,7 +12,7 @@ using namespace std;
 GLMatrices Matrices;
 GLuint     programID;
 GLFWwindow *window;
-Pond pond1,pond2;
+Pond pond1,pond2,pond3,pond4;
 Trampoline tr1,tr2,tr3,tr4;
 Porcupine p1,p2,p3,p4,p5,p6,p7,p8;
 /**************************
@@ -65,6 +65,8 @@ void draw() {
     base.draw_platform(VP);
     pond1.draw(VP);
     pond2.draw(VP);
+    pond3.draw(VP);
+    pond4.draw(VP);
     tr1.draw(VP);
     tr2.draw(VP);
     tr4.draw(VP);
@@ -100,7 +102,7 @@ void tick_input(GLFWwindow *window) {
     int t;
     if(player.position.x > 0){
         t = (int)floor(player.position.x)/12;
-        temp = (t*12) - player.position.x;
+        temp =  player.position.x-((t+1)*12);
     }
     else    temp = player.position.x;
     if (left && player.collide == 0) {
@@ -278,6 +280,8 @@ void initGL(GLFWwindow *window, int width, int height) {
     base        = Platform(COLOR_GROUND);
     pond1 = Pond(0.0,COLOR_BLUE);
     pond2 = Pond(12,COLOR_BLUE);
+    pond3 = Pond(24,COLOR_BLUE);
+    pond4 = Pond(36,COLOR_BLUE);
     tr1 = Trampoline(0,COLOR_TRAMP);
     tr2 = Trampoline(12,COLOR_TRAMP);
     tr3 = Trampoline(24,COLOR_TRAMP);
