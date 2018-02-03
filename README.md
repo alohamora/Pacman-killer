@@ -1,5 +1,6 @@
 ## PACKMAN-KILLER:
-This game is made as a part of Assignment-1 of the course Graphics inspired from original pacman killer game.
+This game is made as a part of Assignment-1 of the course Graphics inspired from original pacman killer game.  
+The game provides support for infine world and also mouse drag support for controlling the ball.
 
 ### Player:
 The player consists of the orange color ball.
@@ -38,10 +39,11 @@ LEVEL-2 -> AT SCORE >= 100
 LEVEL-3 -> AT SCORE >=500
 
 ## CONTROLS:
-UP    -> space bar 
-LEFT  -> 'a'
-RIGHT -> 'd' 
-quit  -> 'q'
-zoom in & out -> mouse scroll
+UP    -> space bar  
+LEFT  -> 'a'  
+RIGHT -> 'd'  
+quit  -> 'q'  
+zoom in & out -> mouse scroll  
+Drag -> Left mouse button
 panning -> left and right arrow key
 
