@@ -5,7 +5,8 @@ The game provides support for infinite world and also mouse drag support for con
 create a new folder named build inside the original directory.  
 cd into that dir and then run <cmake ..>  
 Now run <make> and then trun the executable graphics_assgn1 
-##Game features
+
+## Game features
 ### Player:
 The player consists of the orange color ball.
 The player can jump from the ground and take left and right turns in mid air.
