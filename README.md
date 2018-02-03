@@ -49,6 +49,6 @@ LEFT  -> 'a'
 RIGHT -> 'd'  
 quit  -> 'q'  
 zoom in & out -> mouse scroll  
-Drag -> Left mouse button
+Drag -> Left mouse button  
 panning -> left and right arrow key
 
