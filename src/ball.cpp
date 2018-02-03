@@ -105,10 +105,11 @@ void Ball::tick() {
         }
     }
     
-    if(this->position.x <= -5.75+screen_center_x || this->position.x >= 5.75 + screen_center_x|| this->position.x >= 43.0){
+    if(this->position.x <= -5.75+screen_center_x || this->position.x >= (5.75 + screen_center_x)|| this->position.x >= 43.0 || this->position.x <= -5.75){
         if(this->position.x <= -5.75+screen_center_x)   this->position.x = -5.75+screen_center_x;
-        else    this->position.x = 5.75+screen_center_x; 
-        if(this->position.x>=40) this->position.x = 43.0;
+        else if(this->position.x >= (5.75 + screen_center_x))   this->position.x = 5.75+screen_center_x; 
+        if(this->position.x>=43) this->position.x = 43.0;
+        if(this->position.x<=-5.75) this->position.x = -5.75;
     }
     x = t*12;
     if(this->position.x >= 2.75+x && this->position.x <5+x && this->position.y < -1.0) this->position.x = 2.75+x;   

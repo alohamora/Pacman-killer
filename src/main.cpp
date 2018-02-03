@@ -41,9 +41,9 @@ void draw() {
     // Eye - Location of camera. Don't change unless you are sure!!
     // glm::vec3 eye ( 5*cos(camera_rotation_angle*M_PI/180.0f), 0, 5*sin(camera_rotation_angle*M_PI/180.0f) );
     // Target - Where is the camera looking at.  Don't change unless you are sure!!
-    // glm::vec3 target (0, 0, 0);
     // Up - Up vector defines tilt of camera.  Don't change unless you are sure!!
     // glm::vec3 up (0, 1, 0);
+    // glm::vec3 target (0, 0, 0);
 
     // Compute Camera matrix (view)
     // Matrices.view = glm::lookAt( eye, target, up ); // Rotating Camera for 3D
@@ -99,10 +99,14 @@ void tick_input(GLFWwindow *window) {
     else    temp = player.position.x;
     if (left && player.collide == 0) {
         player.speed.x = -.08;
+        if(player.position.x < screen_center_x && player.position.x > -5.75){
+             screen_center_x += player.speed.x;
+             reset_screen();
+        }
     }
     else if (right && player.collide==0){
         player.speed.x = .08;
-        if(player.position.x > screen_center_x){
+        if(player.position.x > screen_center_x && player.position.x < 43.0){
              screen_center_x += player.speed.x;
              reset_screen();
         }
@@ -188,6 +192,7 @@ void detect_porcupine(){
             p[i].x1 = -15;
             p[i].sp = 0;
             score -= 100;
+            if(score < 100) level = 1;            
         }
     }   
     if(score < 0) score = 0;
@@ -316,6 +321,7 @@ int main(int argc, char **argv) {
 
     initGL (window, width, height);
     strcat(title,"**PACMAN-KILLER**  LEVEL-1 SCORE-0");
+    
     /* Draw in loop */
     while (!glfwWindowShouldClose(window)) {
         // Process timers
