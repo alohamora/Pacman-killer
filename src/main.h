@@ -67,7 +67,6 @@ enum direction_t { DIR_UP, DIR_RIGHT, DIR_DOWN, DIR_LEFT };
 
 
 extern float screen_zoom, screen_center_x, screen_center_y;
-extern int k;
 void reset_screen();
 
 // ---- Colors ----

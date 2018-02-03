@@ -14,7 +14,7 @@ GLuint     programID;
 GLFWwindow *window;
 Pond pond1,pond2,pond3,pond4;
 Trampoline tr1,tr2,tr3,tr4;
-Porcupine p1,p2,p3,p4,p5,p6,p7,p8;
+Porcupine p[8];
 /**************************
 * Customizable functions *
 **************************/
@@ -26,7 +26,6 @@ Magnet magnet;
 int frame_count,level,score;
 char title[500];
 float screen_zoom = 1, screen_center_x = 0, screen_center_y = 0;
-int k = 0;
 Timer t60(1.0 / 60);
 
 /* Render the scene with openGL */
@@ -79,14 +78,7 @@ void draw() {
         player.acc.x = 0.0;
     }
     if(level >= 2){
-        p1.draw(VP);
-        p2.draw(VP);
-        p3.draw(VP);
-        p4.draw(VP);
-        p5.draw(VP);
-        p6.draw(VP);
-        p7.draw(VP);
-        p8.draw(VP);
+        for(int i=0;i<8;i++) p[i].draw(VP);
     }
     player.draw(VP);
     for(int i=0;i<15;i++){
@@ -179,6 +171,7 @@ void detect_collision(){
             enemies[i].set_position(-6-r,y);
             player.collide = 1;
             score += enemies[i].score;
+            if(score < 100) level = 1;
             if(score >= 100)   level = 2;
             if(score >= 500)   level = 3;
             break;
@@ -187,70 +180,16 @@ void detect_collision(){
     }
 }
 void detect_porcupine(){
-    if(player.position.x >= (p1.position.x-0.125) && player.position.x <= (p1.position.x+0.125) && player.position.y <= -1.5){
-        player.speed.y = .08;
-        player.acc.y = -0.002;
-        p1.position.x = -10;
-        p1.x1 = -15;
-        p1.sp = 0;
-        score -= 100;
-    }
-    else if(player.position.x >= (p2.position.x-0.125) && player.position.x <= (p2.position.x+0.125) && player.position.y <= -1.5){
-        player.speed.y = .08;
-        player.acc.y = -0.002;
-        p2.position.x = -10;
-        p2.x1 = -15;
-        p2.sp = 0;
-        score -= 100;
-    }
-        else if(player.position.x >= (p3.position.x-0.125) && player.position.x <= (p3.position.x+0.125) && player.position.y <= -1.5){
-        player.speed.y = .08;
-        player.acc.y = -0.002;
-        p3.position.x = -10;
-        p3.x1 = -15;
-        p3.sp = 0;
-        score -= 100;
-    }
-        else if(player.position.x >= (p4.position.x-0.125) && player.position.x <= (p4.position.x+0.125) && player.position.y <= -1.5){
-        player.speed.y = .08;
-        player.acc.y = -0.002;
-        p4.position.x = -10;
-        p4.x1 = -15;
-        p4.sp = 0;
-        score -= 100;
-    }
-            else if(player.position.x >= (p5.position.x-0.125) && player.position.x <= (p5.position.x+0.125) && player.position.y <= -1.5){
-        player.speed.y = .08;
-        player.acc.y = -0.002;
-        p5.position.x = -10;
-        p5.x1 = -15;
-        p5.sp = 0;
-        score -= 100;
-    }
-            else if(player.position.x >= (p6.position.x-0.125) && player.position.x <= (p6.position.x+0.125) && player.position.y <= -1.5){
-        player.speed.y = .08;
-        player.acc.y = -0.002;
-        p6.position.x = -10;
-        p6.x1 = -15;
-        p6.sp = 0;
-        score -= 100;
-    }
-            else if(player.position.x >= (p7.position.x-0.125) && player.position.x <= (p7.position.x+0.125) && player.position.y <= -1.5){
-        player.speed.y = .08;
-        player.acc.y = -0.002;
-        p7.position.x = -10;
-        p7.x1 = -15;
-        p7.sp = 0;
-        score -= 100;
-    }
-            else if(player.position.x >= (p8.position.x-0.125) && player.position.x <= (p8.position.x+0.125) && player.position.y <= -1.5){
-        player.speed.y = .08;
-        player.acc.y = -0.002;
-        p8.position.x = -10;
-        p8.x1 = -15;
-        p8.sp = 0;
-        score -= 100;
-    }
+    for(int i=0;i<8;i++){
+        if(player.position.x >= (p[i].position.x-0.125) && player.position.x <= (p[i].position.x+0.125) && player.position.y <= -1.5){
+            player.speed.y = .08;
+            player.acc.y = -0.002;
+            p[i].position.x = -10;
+            p[i].x1 = -15;
+            p[i].sp = 0;
+            score -= 100;
+        }
+    }   
     if(score < 0) score = 0;
 }
 void tick_elements() {
@@ -259,12 +198,7 @@ void tick_elements() {
         detect_porcupine();
     player.tick();
     if(level >= 2){
-        p1.tick();
-        p2.tick();
-        p3.tick();
-        p4.tick();        p8.tick();
-        p6.tick();        p5.tick();
-        p7.tick();
+        for(int i=0;i<8;i++)    p[i].tick();
     }
     for(int i=0;i<15;i++){
         enemies[i].tick();
@@ -276,6 +210,7 @@ void initGL(GLFWwindow *window, int width, int height) {
     /* Objects should be created before any other gl function and shaders */
     // Create the models
     float radius,x,y,sp;
+    int t=0;
     player       = Ball(-0.75, -1.75, 0.25, COLOR_RED);
     base        = Platform(COLOR_GROUND);
     pond1 = Pond(0.0,COLOR_BLUE);
@@ -287,14 +222,11 @@ void initGL(GLFWwindow *window, int width, int height) {
     tr3 = Trampoline(24,COLOR_TRAMP);
     tr4 = Trampoline(36,COLOR_TRAMP);
     magnet = Magnet(COLOR_MAGNET);
-    p1 = Porcupine(-5.875,-2.125,COLOR_PORC);
-    p2 = Porcupine(0.125,2.875,COLOR_PORC);
-        p3 = Porcupine(-5.875+12,-2.125+12,COLOR_PORC);
-    p4 = Porcupine(0.125+12,2.875+12,COLOR_PORC);
-        p5 = Porcupine(-5.875+24,-2.125+24,COLOR_PORC);
-    p6 = Porcupine(0.125+24,2.875+24,COLOR_PORC);
-        p7 = Porcupine(-5.875+36,-2.125+36,COLOR_PORC);
-    p8 = Porcupine(0.125+36,2.875+36,COLOR_PORC);
+    for(int i=0;i<8;i+=2){
+        p[i] = Porcupine(-5.875+(12*t),-2.125+(12*t),COLOR_PORC);
+        p[i+1] = Porcupine(0.125+(12*t),2.875+(12*t),COLOR_PORC);
+        t++;
+    }
     for(int i=0;i<15;i++){
         radius = rand()%11 + 20;
         radius = (float)radius/100;
@@ -373,10 +305,6 @@ void drag(GLFWwindow* window, double xpos, double ypos){
         player.position.x = (float)x + 0.1;
     }
 }
-void calc_k(){
-    k = (int)screen_center_x;
-     k -= k%12;
-}
 int main(int argc, char **argv) {
     srand(time(0));
     int width  = 1000;
@@ -384,7 +312,6 @@ int main(int argc, char **argv) {
     frame_count = 0;
     score = 0;
     level = 1;
-    k=0;
     window = initGLFW(width, height);
 
     initGL (window, width, height);
@@ -401,7 +328,6 @@ int main(int argc, char **argv) {
             glfwSetWindowTitle(window,title);
             // Swap Frame Buffer in double buffering
             glfwSwapBuffers(window);
-             calc_k();
             tick_elements();
             tick_input(window);
             glfwSetCursorPosCallback(window, drag);

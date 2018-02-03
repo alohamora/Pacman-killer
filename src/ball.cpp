@@ -60,15 +60,15 @@ void Ball::tick() {
         this->position.x += speed.x;    
     this->position.y += speed.y;
     speed.y += acc.y;
-    // std::cout<<position.x<<" "<<k<<" ";
+    
     if(this->position.x > 0){
         t = (int)floor(this->position.x)/12;
         x = this->position.x - (float)((t+1)*12);
-        // std::cout<<x<<"\n";
     }
     else{
         x = this->position.x;
     }
+    
     if(x >= -2.0 && x <= (0.0) && this->position.y <= -1.75){
         x+=1;
         y = this->position.y;
@@ -95,20 +95,23 @@ void Ball::tick() {
         }
     }
     else{
+        x = t*12;
         if((this->position.y + 1.75) <= 0){
             this->position.y = -1.75;
         }
-        if(this->position.x >=3+k && this->position.x <=5+k && this->position.y <= -1 && this->position.y >= -1.25){
+        if(this->position.x >=3+x && this->position.x <=5+x && this->position.y <= -1 && this->position.y >= -1.25){
             flag_tramp = 1;
             this->position.y = -1;
         }
     }
+    
     if(this->position.x <= -5.75+screen_center_x || this->position.x >= 5.75 + screen_center_x|| this->position.x >= 43.0){
         if(this->position.x <= -5.75+screen_center_x)   this->position.x = -5.75+screen_center_x;
         else    this->position.x = 5.75+screen_center_x; 
         if(this->position.x>=40) this->position.x = 43.0;
     }
-    if(this->position.x >= 2.75+k && this->position.x <5+k && this->position.y < -1.0) this->position.x = 2.75+k;   
-    if(this->position.x > 3+k && this->position.x <=5.25+k && this->position.y < -1.0) this->position.x = 5.25+k;   
+    x = t*12;
+    if(this->position.x >= 2.75+x && this->position.x <5+x && this->position.y < -1.0) this->position.x = 2.75+x;   
+    if(this->position.x > 3+x && this->position.x <=5.25+x && this->position.y < -1.0) this->position.x = 5.25+x;   
 }
 
