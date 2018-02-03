@@ -26,15 +26,15 @@ The magnet shall pull the player ball towards the left side of the window;
 
 ### Score Criterian:
 COLOR-SCORE SCHEME:
-yellow ball = 30 pts__
-red ball = 20 pts__
-Blue ball = 10 pts__
+yellow ball = 30 pts  
+red ball = 20 pts  
+Blue ball = 10 pts  
 And any ball with a plank has an extra score of 10 points
 For colliding with the porcupine each time, the player gets a penalty of -100 points.
 
 ### Levels
-LEVEL-1 -> DEFAULT__
-LEVEL-2 -> AT SCORE >= 100__
+LEVEL-1 -> DEFAULT  
+LEVEL-2 -> AT SCORE >= 100  
 LEVEL-3 -> AT SCORE >=500
 
 ## CONTROLS:
