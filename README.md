@@ -33,9 +33,9 @@ And any ball with a plank has an extra score of 10 points
 For colliding with the porcupine each time, the player gets a penalty of -100 points.
 
 ### Levels
-LEVEL-1 -> DEFAULT
-LEVEL-2 -> AT SCORE >= 100
-LEVEL-3 -> AT SCORE >=500
+LEVEL-1 -> DEFAULT;
+LEVEL-2 -> AT SCORE >= 100;
+LEVEL-3 -> AT SCORE >=500;
 
 ## CONTROLS:
 UP    -> space bar 
