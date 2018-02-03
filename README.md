@@ -1,6 +1,6 @@
 ## PACKMAN-KILLER:
 This game is made as a part of Assignment-1 of the course Graphics inspired from original pacman killer game.  
-The game provides support for infine world and also mouse drag support for controlling the ball.
+The game provides support for infinite world and also mouse drag support for controlling the ball.
 
 ### Player:
 The player consists of the orange color ball.
