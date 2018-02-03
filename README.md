@@ -1,7 +1,11 @@
 ## PACKMAN-KILLER:
 This game is made as a part of Assignment-1 of the course Graphics inspired from original pacman killer game.  
 The game provides support for infinite world and also mouse drag support for controlling the ball.
-
+## BUILD INSTRUCTIONS
+create a new folder named build inside the original directory.  
+cd into that dir and then run <cmake ..>  
+Now run <make> and then trun the executable graphics_assgn1 
+##Game features
 ### Player:
 The player consists of the orange color ball.
 The player can jump from the ground and take left and right turns in mid air.
