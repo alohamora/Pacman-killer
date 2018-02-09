@@ -60,7 +60,7 @@ void Ball::tick() {
         this->position.x += speed.x;    
     this->position.y += speed.y;
     speed.y += acc.y;
-    
+    speed.x += acc.x;
     if(this->position.x > 0){
         t = (int)floor(this->position.x)/12;
         x = this->position.x - (float)((t+1)*12);

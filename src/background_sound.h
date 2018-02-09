@@ -1,0 +1,1 @@
+pid_t bg_sound();

@@ -9,6 +9,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include<string.h>
+#include<sys/types.h>
+#include<signal.h>
 #define GLM_FORCE_RADIANS
 
 #include <glm/glm.hpp>
@@ -40,6 +42,7 @@ void error_callback(int error, const char *description);
 void quit(GLFWwindow *window);
 void reshapeWindow(GLFWwindow *window, int width, int height);
 
+
 // Types
 struct VAO {
     GLuint VertexArrayID;
@@ -65,7 +68,7 @@ extern GLMatrices Matrices;
 
 enum direction_t { DIR_UP, DIR_RIGHT, DIR_DOWN, DIR_LEFT };
 
-
+extern pid_t pid;
 extern float screen_zoom, screen_center_x, screen_center_y;
 void reset_screen();
 

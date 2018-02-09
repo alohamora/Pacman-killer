@@ -22,6 +22,7 @@ void error_callback(int error, const char *description) {
 void quit(GLFWwindow *window) {
     glfwDestroyWindow(window);
     glfwTerminate();
+    kill(pid,SIGKILL);
     exit(EXIT_SUCCESS);
 }
 

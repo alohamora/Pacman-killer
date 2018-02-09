@@ -7,6 +7,7 @@
 #include"trampoline.h"
 #include"magnet.h"
 #include"porcupine.h"
+#include"background_sound.h"
 using namespace std;
 
 GLMatrices Matrices;
@@ -23,6 +24,7 @@ Ball player;
 Platform base;
 Enemy enemies[15];
 Magnet magnet;
+pid_t pid;
 int frame_count,level,score;
 char title[500];
 float screen_zoom = 1, screen_center_x = 0, screen_center_y = 0;
@@ -72,7 +74,8 @@ void draw() {
     tr3.draw(VP);
     if((frame_count/240)%2==1 && level==3){  
         magnet.draw(VP);
-        player.acc.x = -.02;
+        if(player.speed.x >= -0.04)
+            player.acc.x = -.02;
     }
     else{
         player.acc.x = 0.0;
@@ -97,12 +100,14 @@ void tick_input(GLFWwindow *window) {
         temp =  player.position.x-((t+1)*12);
     }
     else    temp = player.position.x;
+
     if (left && player.collide == 0) {
         player.speed.x = -.08;
+        player.acc.x = 0.03;
     }
     else if (right && player.collide==0){
         player.speed.x = .08;
-
+        player.acc.x = -0.03;
     }
     else if(up && player.collide==0) {
         if(player.position.y ==-1.75 || player.flag_pond == 2){
@@ -111,18 +116,26 @@ void tick_input(GLFWwindow *window) {
         }
     }
     else{
-        if(player.collide==0)
-            player.speed.x = 0.0;
+        if(player.position.y > -0.75){
+            if(player.speed.x > 0)  player.acc.x = -0.03;
+            else if(player.speed.x < 0) player.acc.x = 0.03;
+            else player.acc.x = 0;
+        }
+        else{
+            player.speed.x = 0;
+            player.acc.x = 0;
+        }
     }
     player.acc.y = -0.002;
     player.detect_object(temp);
+    player.collide = 0;
     if(left){
         if(player.position.x < (screen_center_x-0.8) && player.position.x > -5.75){
              screen_center_x += player.speed.x;
              reset_screen();
         }
     }
-    if(right){
+    else if(right){
         if(player.position.x > (screen_center_x+0.8) && player.position.x < 43.0){
              screen_center_x += player.speed.x;
              reset_screen();
@@ -143,8 +156,8 @@ void detect_collision(){
                 player.speed.x = 0;
             }
             else{
-                player.speed.y = 1.2*(player.speed.x*sin(2*(90.0 + enemies[i].angle)*M_PI/180.0) - player.speed.y*cos(2*(90.0 + enemies[i].angle)*M_PI/180.0));
-                player.speed.x = 1.2*(-player.speed.x*cos(2*(90.0 + enemies[i].angle)*M_PI/180.0) - player.speed.y*sin(2*(90.0 + enemies[i].angle)*M_PI/180.0));
+                player.speed.y = (player.speed.x*sin(2*(90.0 + enemies[i].angle)*M_PI/180.0) - player.speed.y*cos(2*(90.0 + enemies[i].angle)*M_PI/180.0));
+                player.speed.x = (-player.speed.x*cos(2*(90.0 + enemies[i].angle)*M_PI/180.0) - player.speed.y*sin(2*(90.0 + enemies[i].angle)*M_PI/180.0));
             }
             y = rand()%(41)-7;
             y = y/10;
@@ -169,7 +182,9 @@ void detect_porcupine(){
             p[i].x1 = -15;
             p[i].sp = 0;
             score -= 100;
-            if(score < 100) level = 1;            
+            if(score < 100) level = 1;
+            if(score >= 100)   level = 2;
+            if(score >= 500)   level = 3;
         }
     }   
     if(score < 0) score = 0;
@@ -295,14 +310,12 @@ int main(int argc, char **argv) {
     score = 0;
     level = 1;
     window = initGLFW(width, height);
-
     initGL (window, width, height);
     strcat(title,"**PACMAN-KILLER**  LEVEL-1 SCORE-0");
-    
+    pid = bg_sound();
     /* Draw in loop */
     while (!glfwWindowShouldClose(window)) {
         // Process timers
-
         if (t60.processTick()) {
             // 60 fps
             // OpenGL Draw commands
