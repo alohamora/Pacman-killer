@@ -99,17 +99,10 @@ void tick_input(GLFWwindow *window) {
     else    temp = player.position.x;
     if (left && player.collide == 0) {
         player.speed.x = -.08;
-        if(player.position.x < screen_center_x && player.position.x > -5.75){
-             screen_center_x += player.speed.x;
-             reset_screen();
-        }
     }
     else if (right && player.collide==0){
         player.speed.x = .08;
-        if(player.position.x > screen_center_x && player.position.x < 43.0){
-             screen_center_x += player.speed.x;
-             reset_screen();
-        }
+
     }
     else if(up && player.collide==0) {
         if(player.position.y ==-1.75 || player.flag_pond == 2){
@@ -122,34 +115,18 @@ void tick_input(GLFWwindow *window) {
             player.speed.x = 0.0;
     }
     player.acc.y = -0.002;
-    player.collide = 0;
-    if(player.flag_tramp == 1) player.speed.y = 0.15;
-    if(player.flag_pond == 1){
-        if(player.speed.y<=0){
-            player.acc.y = 0.0;
-            player.speed.y = -.02;
-        }
-        else    player.acc.y = -.004;
-        if(player.speed.x!=0){
-            if(player.speed.x > 0)  player.speed.x -= .02;
-            else    player.speed.x += .02;
+    player.detect_object(temp);
+    if(left){
+        if(player.position.x < (screen_center_x-0.8) && player.position.x > -5.75){
+             screen_center_x += player.speed.x;
+             reset_screen();
         }
     }
-    else if(player.flag_pond==2){
-        if(player.speed.y<=0){
-            player.acc.y = 0.0;
-            player.speed.y = -.02;
+    if(right){
+        if(player.position.x > (screen_center_x+0.8) && player.position.x < 43.0){
+             screen_center_x += player.speed.x;
+             reset_screen();
         }
-        else    player.acc.y = -.004;
-        if(player.speed.x==0){
-
-            if(temp < -1) player.speed.x = .01;
-            else if(temp > -1)  player.speed.x = -.01;
-        }
-        else{
-            if(player.speed.x > 0)  player.speed.x -= .04;
-            else    player.speed.x += .04;
-        }        
     }
 }
 

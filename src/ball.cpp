@@ -116,3 +116,33 @@ void Ball::tick() {
     if(this->position.x > 3+x && this->position.x <=5.25+x && this->position.y < -1.0) this->position.x = 5.25+x;   
 }
 
+void Ball::detect_object(float temp){
+    if(this->flag_tramp == 1) this->speed.y = 0.15;
+    if(this->flag_pond == 1){
+        if(this->speed.y<=0){
+            this->acc.y = 0.0;
+            this->speed.y = -.02;
+        }
+        else    this->acc.y = -.004;
+        if(this->speed.x!=0){
+            if(this->speed.x > 0)  this->speed.x -= .02;
+            else    this->speed.x += .02;
+        }
+    }
+    else if(this->flag_pond==2){
+        if(this->speed.y<=0){
+            this->acc.y = 0.0;
+            this->speed.y = -.02;
+        }
+        else    this->acc.y = -.004;
+        if(this->speed.x==0){
+
+            if(temp < -1) this->speed.x = .01;
+            else if(temp > -1)  this->speed.x = -.01;
+        }
+        else{
+            if(this->speed.x > 0)  this->speed.x -= .04;
+            else    this->speed.x += .04;
+        }        
+    }
+}

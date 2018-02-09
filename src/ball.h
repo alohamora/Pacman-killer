@@ -15,6 +15,7 @@ public:
     void draw(glm::mat4 VP);
     void set_position(float x, float y);
     void tick();
+    void detect_object(float temp);
     glm::vec2 speed;
     glm::vec2 acc;
 protected:
